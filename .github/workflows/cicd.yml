@@ -26,5 +26,20 @@ jobs:
             submodules: recursive
         - run: |
               uname -a
-              echo Failure
-              exit 10
+              echo Success
+  ci-passing-check:
+      if: always()
+
+      needs:
+      - run-build
+      - run-another-job
+
+      runs-on: ubuntu-latest
+
+      steps:
+      - name: Decide whether the needed jobs succeeded or failed
+        uses: re-actors/alls-green@v1.2.2
+        with:
+          # allowed-failures: a_job
+          # allowed-skips: another_job
+          jobs: ${{ toJSON(needs) }}
