@@ -1,0 +1,20 @@
+name: Run CI
+run-name: ${{ github.actor }}
+
+on:
+  push:
+  pull_request:
+    branches: [main] # Only pull request to main branch trigger the workflow.
+
+jobs:
+  run-build:
+      runs-on:  ubuntu-latest
+      steps:
+        - name: Checkout code
+          uses: actions/checkout@v4
+          with:
+            submodules: recursive
+        - run: |
+              uname -a
+              echo Success
+
